@@ -10,15 +10,11 @@ class App extends React.Component {
     super();
     this.state = {
       user: {},
-      followers: {}
+      followers: []
     }
 
   };
 
-
-follow = (fol) => { 
-  this.setState((this.user: Object.entries(this.state.followers))
-}
 
 
   
@@ -34,14 +30,14 @@ follow = (fol) => {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    axios.get('https://api.github.com/users/lizdoyle/followers')
+    if (prevState.user !== this.state.user) {axios.get('https://api.github.com/users/lizdoyle/followers')
       .then((res) => {
         this.setState({ followers: res.data });
-        console.log("CDU in App.js:", this.state);
+        console.log("CDU in App.js:", this.state)
         
       })
       .catch(err => console.log(err))
-  }
+  }}
 
 
 
@@ -50,7 +46,7 @@ follow = (fol) => {
     return (
       <div className="App">
         <UserCard user={this.state.user} />
-        <UserFollowers follow={this.follow} />
+        <UserFollowers followers={this.state.followers} />
       </div>
     );
   }
